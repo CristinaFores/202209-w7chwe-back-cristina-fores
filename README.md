@@ -11,4 +11,4 @@ POST /user/addEnemy/:id _ Remove from friends
 GET /users { filters: [friends, enemies] }
 GET /me
 
-![planning](planing-red-social.png)
+![planing-red-social.png](planing-red-social.png)
