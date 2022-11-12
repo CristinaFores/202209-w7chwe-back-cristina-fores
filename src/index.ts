@@ -16,7 +16,7 @@ try {
   await connectDb(mongoDbUrl);
   debug(chalk.blue("Connect data base"));
 } catch (error: unknown) {
-  console.log(
+  debug(
     chalk.red(`Error connecting to the database ${(error as Error).message}`)
   );
 }
