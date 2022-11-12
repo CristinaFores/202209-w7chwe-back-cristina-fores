@@ -11,7 +11,7 @@ const debug = debugCreator("items:server");
 const { port, mongoDbUrl } = environment;
 
 try {
-  await startServer(app, +port);
+  await startServer(app, Number(port));
   debug(chalk.magenta("Start server"));
   await connectDb(mongoDbUrl);
   debug(chalk.blue("Connect data base"));
