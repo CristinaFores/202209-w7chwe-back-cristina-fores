@@ -10,4 +10,4 @@
 - GET /users { filters: [friends, enemies] }
 - GET /me
 
-![planing.png](planing-red-social.png)
+![planing.png](https://github.com/CristinaFores/202209-w7chwe-back-cristina-fores/blob/master/planning-red-socila.png)
