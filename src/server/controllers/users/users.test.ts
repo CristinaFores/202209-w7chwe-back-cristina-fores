@@ -108,18 +108,18 @@ describe("Given a register loginUser", () => {
       });
     });
 
-    // Describe("When it receives incorrect username and correct password with 12345", () => {
-    //   test("Then it should call next", async () => {
-    //     const req: Partial<Request> = {
-    //       body: login,
-    //     };
+    describe("When it receives incorrect username and correct password with 12345", () => {
+      test("Then it should call next", async () => {
+        const req: Partial<Request> = {
+          body: login,
+        };
 
-    //     User.findOne = jest.fn().mockResolvedValueOnce(false);
+        User.findOne = jest.fn().mockResolvedValueOnce(false);
 
-    //     await loginUser(req as Request, res as Response, next as NextFunction);
+        await loginUser(req as Request, res as Response, next as NextFunction);
 
-    //     expect(next).toBeCalled();
-    //   });
-    // });
+        expect(next).toBeCalled();
+      });
+    });
   });
 });

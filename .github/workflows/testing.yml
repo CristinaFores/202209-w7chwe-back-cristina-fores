@@ -16,3 +16,5 @@ jobs:
 
       - name: Testing
         run: npm test -- --passWithNoTests
+        env:
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
