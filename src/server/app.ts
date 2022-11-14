@@ -1,7 +1,7 @@
 import "../loadEnvironment.js";
 import express from "express";
 import morgan from "morgan";
-import usersRouter from "./routes/users/index.js";
+import usersRouter from "./routers/usersRouters/usersRouters.js";
 import { generalError, notFoundError } from "./middlewares/errors.js";
 import cors from "cors";
 
