@@ -58,5 +58,5 @@ export const loginUser = async (
     expiresIn: "1d",
   });
 
-  res.status(200).json({ accessToken: token });
+  res.status(200).json({ token });
 };
