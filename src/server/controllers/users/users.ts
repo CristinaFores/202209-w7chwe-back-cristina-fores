@@ -60,7 +60,7 @@ export const loginUser = async (
   res.status(200).json({ token });
 };
 
-export const loasUsers = async (
+export const loadUsers = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction

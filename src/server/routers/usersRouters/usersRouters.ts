@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  loasUsers,
+  loadUsers,
   loginUser,
   registerUser,
 } from "../../controllers/users/users.js";
@@ -10,5 +10,5 @@ const usersRouter = express.Router();
 
 usersRouter.post("/register", registerUser);
 usersRouter.post("/login", loginUser);
-usersRouter.get("/", loasUsers);
+usersRouter.get("/", loadUsers);
 export default usersRouter;
