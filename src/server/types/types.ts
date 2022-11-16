@@ -1,4 +1,10 @@
+import type { Request } from "express";
+
 export interface Credentials {
   username: string;
   password: string;
+}
+
+export interface CustomRequest extends Request {
+  userId: string;
 }
