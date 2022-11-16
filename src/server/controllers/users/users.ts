@@ -1,16 +1,16 @@
 import "../../../loadEnvironment.js";
-import type { NextFunction, Request, Response } from "express";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../../../dababase/models/User.js";
 import CustomError from "../../../CustomError/CustomError.js";
-import type { Credentials } from "../../types/types.js";
+import type { Credentials, CustomRequest } from "../../types/types.js";
 import environment from "../../../loadEnvironment.js";
+import type { NextFunction, Request, Response } from "express";
 
 export const registerUser = async (
   req: Request,
   res: Response,
-
   next: NextFunction
 ) => {
   const { username, password } = req.body as Credentials;
@@ -33,7 +33,6 @@ export const registerUser = async (
 export const loginUser = async (
   req: Request,
   res: Response,
-
   next: NextFunction
 ) => {
   const { username, password } = req.body as Credentials;
@@ -59,4 +58,31 @@ export const loginUser = async (
   });
 
   res.status(200).json({ token });
+};
+
+export const loasUsers = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = req;
+  try {
+    const users = await User.find({
+      _id: { $ne: userId },
+    }).select("-password");
+
+    if (!users?.length) {
+      res.status(404).json({ message: "No users found" });
+      return;
+    }
+
+    res.status(200).json({ users });
+  } catch (error: unknown) {
+    const customError = new CustomError(
+      (error as Error).message,
+      "Database doesn't work",
+      500
+    );
+    next(customError);
+  }
 };
