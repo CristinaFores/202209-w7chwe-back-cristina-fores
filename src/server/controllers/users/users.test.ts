@@ -1,10 +1,9 @@
 import bcrypt from "bcrypt";
 import type { NextFunction, Response, Request } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
-
 import User from "../../../dababase/models/User.js";
-import type { Credentials } from "../../types/types";
-import { loginUser, registerUser } from "./users";
+import type { Credentials, CustomRequest } from "../../types/types";
+import { loadUsers, loginUser, registerUser } from "./users";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -120,6 +119,72 @@ describe("Given a register loginUser", () => {
 
         expect(next).toBeCalled();
       });
+    });
+  });
+});
+
+describe("Given a loadUsers Controller", () => {
+  const listUsers = [
+    {
+      username: "Cris",
+      password: "12345678910",
+    },
+    {
+      username: "Cristina",
+      password: "12345678910",
+    },
+    {
+      username: "Cris1",
+      password: "12345678910",
+    },
+  ];
+  const req: Partial<Request> = {
+    body: listUsers,
+  };
+
+  describe("When it listing a list of users", () => {
+    test("Then it should call the response method status with a 200, and the json method", async () => {
+      const expectedStatus = 200;
+
+      User.find = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnValue(listUsers),
+      });
+
+      await loadUsers(req as CustomRequest, res as Response, null);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+      expect(res.json).toHaveBeenCalled();
+    });
+  });
+
+  describe("When it receives one list users the array", () => {
+    test("Then it should call the response method status with a 404", async () => {
+      const expectedStatus = 404;
+
+      User.find = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnValue([]),
+      });
+
+      await loadUsers(req as CustomRequest, res as Response, null);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+
+  describe("When it receives a response with an error", () => {
+    test("Then next should be called", async () => {
+      const error = new Error();
+      User.find = jest.fn().mockReturnValue({
+        select: jest.fn().mockRejectedValue(error),
+      });
+
+      await loadUsers(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalled();
     });
   });
 });
